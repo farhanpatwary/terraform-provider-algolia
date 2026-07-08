@@ -575,6 +575,13 @@ This parameter is mainly intended to **limit the response size.** For example, i
 					},
 				},
 			},
+			"mode": {
+				Type:         schema.TypeString,
+				Optional:     true,
+				Computed:     true,
+				ValidateFunc: validation.StringInSlice([]string{"neuralSearch", "keywordSearch"}, false),
+				Description:  "Index search mode. Set to `neuralSearch` to enable NeuralSearch (hybrid keyword + vector search). Defaults to `keywordSearch` when unset.",
+			},
 			"deletion_protection": {
 				Type:        schema.TypeBool,
 				Optional:    true,
@@ -759,7 +766,17 @@ func mapToIndexResourceValues(d *schema.ResourceData, settings search.Settings) 
 		"query_strategy_config":  marshalQueryStrategyConfig(settings, isVirtualIndex),
 		"performance_config":     marshalPerformanceConfig(settings, isVirtualIndex),
 		"advanced_config":        marshalAdvancedConfig(settings, isVirtualIndex),
+		"mode":                   marshalMode(settings),
 	}
+}
+
+func marshalMode(settings search.Settings) string {
+	if v, ok := settings.CustomSettings["mode"]; ok {
+		if s, ok := v.(string); ok {
+			return s
+		}
+	}
+	return ""
 }
 
 func marshalAttributesConfig(settings search.Settings, isVirtualIndex bool) []interface{} {
@@ -937,6 +954,12 @@ func mapToIndexSettings(d *schema.ResourceData) search.Settings {
 	}
 	if v, ok := d.GetOk("advanced_config"); ok {
 		unmarshalAdvancedConfig(v, &settings, isVirtualIndex)
+	}
+	if v, ok := d.GetOk("mode"); ok && v.(string) != "" {
+		if settings.CustomSettings == nil {
+			settings.CustomSettings = map[string]interface{}{}
+		}
+		settings.CustomSettings["mode"] = v.(string)
 	}
 
 	return settings
