@@ -11,7 +11,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
-	"github.com/hashicorp/terraform-provider-algolia/internal/algoliautil"
+	"github.com/bluelightcard/terraform-provider-algolia/internal/algoliautil"
 )
 
 func resourceAPIKey() *schema.Resource {
@@ -131,13 +131,15 @@ func resourceAPIKeyRead(ctx context.Context, d *schema.ResourceData, m interface
 func resourceAPIKeyUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	apiClient := m.(*apiClient)
 
-	res, err := apiClient.searchClient.UpdateAPIKey(mapToAPIKey(d), ctx)
+	_, err := apiClient.searchClient.UpdateAPIKey(mapToAPIKey(d), ctx)
 	if err != nil {
 		return diag.FromErr(err)
 	}
-	if err = res.Wait(); err != nil {
-		return diag.FromErr(err)
-	}
+	// res.Wait() polls GetAPIKey and compares the returned indexes slice against
+	// what was submitted. Algolia returns indexes in an unpredictable order, so
+	// the ordered-slice comparison in the v3 client never converges — causing an
+	// indefinite hang (issues #158, #278). UpdateAPIKey is applied synchronously
+	// server-side; the subsequent Read confirms the new state in Terraform.
 
 	return resourceAPIKeyRead(ctx, d, m)
 }
