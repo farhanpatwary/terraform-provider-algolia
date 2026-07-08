@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	"github.com/algolia/algoliasearch-client-go/v3/algolia/region"
-	"github.com/hashicorp/terraform-provider-algolia/internal/algoliautil"
+	"github.com/bluelightcard/terraform-provider-algolia/internal/algoliautil"
 )
 
 // parseImportRegionAndId will parse either {{id}} or {{region}}/{{id}} format import id.

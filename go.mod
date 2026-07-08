@@ -1,4 +1,4 @@
-module github.com/hashicorp/terraform-provider-algolia
+module github.com/bluelightcard/terraform-provider-algolia
 
 go 1.24.0
 

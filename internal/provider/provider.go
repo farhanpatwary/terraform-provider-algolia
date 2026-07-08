@@ -10,8 +10,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/logging"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-	"github.com/hashicorp/terraform-provider-algolia/internal/algoliautil"
-	"github.com/hashicorp/terraform-provider-algolia/internal/mutex"
+	"github.com/bluelightcard/terraform-provider-algolia/internal/algoliautil"
+	"github.com/bluelightcard/terraform-provider-algolia/internal/mutex"
 )
 
 // Global Key/Value Mutex

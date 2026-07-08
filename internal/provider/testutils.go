@@ -5,7 +5,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
-	"github.com/hashicorp/terraform-provider-algolia/internal/algoliautil"
+	"github.com/bluelightcard/terraform-provider-algolia/internal/algoliautil"
 	"github.com/rs/xid"
 )
 

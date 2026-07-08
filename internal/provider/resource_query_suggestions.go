@@ -12,7 +12,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
-	"github.com/hashicorp/terraform-provider-algolia/internal/algoliautil"
+	"github.com/bluelightcard/terraform-provider-algolia/internal/algoliautil"
 )
 
 func resourceQuerySuggestions() *schema.Resource {

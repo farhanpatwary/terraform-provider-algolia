@@ -8,7 +8,7 @@ import (
 	"strings"
 
 	"github.com/algolia/algoliasearch-client-go/v3/algolia/search"
-	"github.com/hashicorp/terraform-provider-algolia/internal/algoliautil"
+	"github.com/bluelightcard/terraform-provider-algolia/internal/algoliautil"
 	"golang.org/x/sync/errgroup"
 )
 

@@ -4,7 +4,7 @@ import (
 	"flag"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/plugin"
-	"github.com/hashicorp/terraform-provider-algolia/internal/provider"
+	"github.com/bluelightcard/terraform-provider-algolia/internal/provider"
 )
 
 // Run "go generate" to format example terraform files and generate the docs for the registry/website
@@ -34,7 +34,7 @@ func main() {
 
 	opts := &plugin.ServeOpts{
 		ProviderFunc: provider.New(version),
-		ProviderAddr: "registry.terraform.io/k-yomo/algolia",
+		ProviderAddr: "registry.terraform.io/bluelightcard/algolia",
 		Debug:        debugMode,
 	}
 
