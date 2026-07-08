@@ -12,7 +12,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
-	"github.com/hashicorp/terraform-provider-algolia/internal/algoliautil"
+	"github.com/bluelightcard/terraform-provider-algolia/internal/algoliautil"
 )
 
 func resourceIndex() *schema.Resource {
@@ -48,6 +48,12 @@ func resourceIndex() *schema.Resource {
 				Default:     false,
 				Description: "**Deprecated:** Use `algolia_virtual_index` resource instead. Whether the index is virtual index. If true, applying the params listed in the [doc](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#unsupported-parameters) will be ignored.",
 				Deprecated:  "Use `algolia_virtual_index` resource instead",
+			},
+			"replicas": {
+				Type:        schema.TypeList,
+				Computed:    true,
+				Elem:        &schema.Schema{Type: schema.TypeString},
+				Description: "Read-only list of replica and virtual replica index names attached to this primary index. Replica relationships are managed by `algolia_virtual_index` resources.",
 			},
 			"attributes_config": {
 				Type:        schema.TypeList,
@@ -727,6 +733,7 @@ func mapToIndexResourceValues(d *schema.ResourceData, settings search.Settings) 
 		"name":               d.Id(),
 		"primary_index_name": settings.Primary.Get(),
 		"virtual":            isVirtualIndex,
+		"replicas":           settings.Replicas.Get(),
 		"attributes_config":  marshalAttributesConfig(settings, isVirtualIndex),
 		"ranking_config":     marshalRankingConfig(settings, isVirtualIndex),
 		"faceting_config": []interface{}{map[string]interface{}{

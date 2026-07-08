@@ -10,7 +10,7 @@ import (
 	"github.com/algolia/algoliasearch-client-go/v3/algolia/search"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
-	"github.com/hashicorp/terraform-provider-algolia/internal/algoliautil"
+	"github.com/bluelightcard/terraform-provider-algolia/internal/algoliautil"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
@@ -107,7 +107,7 @@ func resourceVirtualIndex() *schema.Resource {
 						"relevancy_strictness": {
 							Type:         schema.TypeInt,
 							Optional:     true,
-							Default:      100,
+							Computed:     true,
 							ValidateFunc: validation.IntBetween(0, 100),
 							Description:  "Relevancy threshold below which less relevant results aren’t included in the results",
 						},
